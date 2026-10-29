@@ -57,51 +57,61 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_GREEN);
+            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case SLIGHT_LEFT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_YELLOW);
+            Motor_Forward(1500, 3000);
             break;
 
         case SLIGHT_RIGHT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_PINK);
+            Motor_Forward(3000, 1500);
             break;
 
         case FAR_LEFT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_WHITE);
+            Motor_Left(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case FAR_RIGHT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_SKY_BLUE);
+            Motor_Right(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case LEFT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_WHITE);
+            Motor_Left(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case RIGHT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_SKY_BLUE);
+            Motor_Right(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case T_INTERSECTION:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_BLUE);
+            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
             break;
 
         case DEAD_END:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_RED);
+            Motor_Stop();
             break;
 
         default:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_OFF);
+            Motor_Stop;
             break;
     }
 }
@@ -132,6 +142,9 @@ int main(void)
 
     // Initialize the 48 MHz Clock
     Clock_Init48MHz();
+
+    // Initialize motors
+    Motor_Init();
 
     // Initialize the built-in red LED and the RGB LED on the MSP432 microcontroller
     LED1_Init();
