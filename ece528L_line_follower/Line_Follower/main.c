@@ -17,7 +17,7 @@
  * @note For more information regarding the 8-Channel QTRX Sensor Array module,
  * refer to the product page: https://www.pololu.com/product/3672
  *
- * @author
+ * @author Erendira Miranda, Jose Flores
  *
  */
 
