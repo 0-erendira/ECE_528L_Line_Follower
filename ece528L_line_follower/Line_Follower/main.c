@@ -63,7 +63,11 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
     if(turn_state == TURNING_LEFT)
     {
-        Motor_Left(0, PWM_NOMINAL);
+        while(reflectance_sensor_data != CENTER)
+        {
+            Motor_Left(0, PWM_NOMINAL);
+
+        }
 
         if(reflectance_sensor_data == CENTER)
         {
@@ -75,7 +79,10 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
 
     if(turn_state == TURNING_RIGHT)
     {
-        Motor_Right(PWM_NOMINAL, 0);
+        while(reflectance_sensor_data != CENTER)
+        {
+            Motor_Right(PWM_NOMINAL, 0);
+        }
 
         if(reflectance_sensor_data == CENTER)
         {
