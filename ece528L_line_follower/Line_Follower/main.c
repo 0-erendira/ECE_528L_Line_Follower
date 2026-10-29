@@ -63,13 +63,13 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case SLIGHT_LEFT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_YELLOW);
-            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            Motor_Forward(PWM_NOMINAL, 2000);
             break;
 
         case SLIGHT_RIGHT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_PINK);
-            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            Motor_Forward(2000, PWM_NOMINAL);
             break;
 
         case FAR_LEFT:
