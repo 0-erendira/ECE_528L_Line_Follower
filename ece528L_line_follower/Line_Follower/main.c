@@ -65,7 +65,7 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
     {
         Motor_Left(1800, 1800);
 
-        if(reflectance_sesnor_data == CENTER)
+        if(reflectance_sensor_data == CENTER)
         {
             turn_state = NO_TURN;
             Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
