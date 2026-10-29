@@ -87,13 +87,13 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case LEFT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_WHITE);
-            Motor_Left(PWM_NOMINAL, PWM_NOMINAL);
+            Motor_Left(0, PWM_NOMINAL);
             break;
 
         case RIGHT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(PWM_NOMINAL, PWM_NOMINAL);
+            Motor_Right(PWM_NOMINAL, 0);
             break;
 
         case T_INTERSECTION:
