@@ -60,52 +60,50 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
             break;
 
         case SLIGHT_LEFT_CENTER:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_YELLOW);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_YELLOW);
+            break;
 
         case SLIGHT_RIGHT_CENTER:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_PINK);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_PINK);
+            break;
 
         case FAR_LEFT:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_WHITE);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_WHITE);
+            break;
 
         case FAR_RIGHT:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_SKY_BLUE);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_SKY_BLUE);
+            break;
 
         case LEFT_TURN:
-                    LED1_Output(RED_LED_ON);
-                    LED2_Output(RGB_LED_WHITE);
-                    break;
+            LED1_Output(RED_LED_ON);
+            LED2_Output(RGB_LED_WHITE);
+            break;
 
         case RIGHT_TURN:
-                    LED1_Output(RED_LED_ON);
-                    LED2_Output(RGB_LED_SKY_BLUE);
-                    break;
+            LED1_Output(RED_LED_ON);
+            LED2_Output(RGB_LED_SKY_BLUE);
+            break;
 
         case T_INTERSECTION:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_BLUE);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_BLUE);
+            break;
 
         case DEAD_END:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_RED);
-                    break;
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_RED);
+            break;
 
         default:
-                    LED1_Output(RED_LED_OFF);
-                    LED2_Output(RGB_LED_OFF);
-
+            LED1_Output(RED_LED_OFF);
+            LED2_Output(RGB_LED_OFF);
+            break;
     }
-    break;
-    // The rest of your code goes here
 }
 
 void Timer_A1_Periodic_Task(void)
