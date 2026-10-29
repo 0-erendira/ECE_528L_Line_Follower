@@ -63,7 +63,7 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
     if(turn_state == TURNING_LEFT)
     {
-        Motor_Left(1800, 1800);
+        Motor_Left(0, PWM_NOMINAL);
 
         if(reflectance_sensor_data == CENTER)
         {
@@ -75,7 +75,7 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
 
     if(turn_state == TURNING_RIGHT)
     {
-        Motor_Right(1800, 1800);
+        Motor_Right(PWM_NOMINAL, 0);
 
         if(reflectance_sensor_data == CENTER)
         {
@@ -121,14 +121,14 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_WHITE);
             turn_state = TURNING_LEFT;
-            Motor_Left(1800, 1800);
+            Motor_Left(0, PWM_NOMINAL);
             break;
 
         case RIGHT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_SKY_BLUE);
             turn_state = TURNING_RIGHT;
-            Motor_Right(1800, 1800);
+            Motor_Right(PWM_NOMINAL, 0);
             break;
 
         case T_INTERSECTION:
