@@ -50,44 +50,8 @@ typedef enum
     DEAD_END            =   0b00000000
 } Line_Position;
 
-typedef enum
-{
-    NO_TURN,
-    TURNING_LEFT,
-    TURNING_RIGHT
-}Turn_State;
-
-static Turn_State turn_state = NO_TURN;
-
 void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
-
-    if (turn_state == TURNING_LEFT)
-        {
-            Motor_Left(1800, 1800);
-
-            if (reflectance_sensor_data == CENTER)
-            {
-                turn_state = NO_TURN;
-                Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
-            }
-
-            return;
-        }
-
-    if (turn_state == TURNING_RIGHT)
-      {
-          Motor_Right(1800, 1800);
-
-          if (reflectance_sensor_data == CENTER)
-          {
-              turn_state = NO_TURN;
-              Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
-          }
-
-          return;
-      }
-
     switch(reflectance_sensor_data)
     {
         case CENTER:
@@ -99,25 +63,37 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case SLIGHT_LEFT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_YELLOW);
-            Motor_Forward(PWM_NOMINAL, 2000);
+            Motor_Forward(2000, PWM_NOMINAL);
             break;
 
         case SLIGHT_RIGHT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_PINK);
-            Motor_Forward(2000, PWM_NOMINAL);
+            Motor_Forward(PWM_NOMINAL, 2000);
             break;
 
         case FAR_LEFT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_WHITE);
-            Motor_Left(3500, 500);
+            Motor_Left(3000, 1000);
             break;
 
         case FAR_RIGHT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(500, 3500);
+            Motor_Right(1000, 3000);
+            break;
+
+        case LEFT_TURN:
+            LED1_Output(RED_LED_ON);
+            LED2_Output(RGB_LED_WHITE);
+            Motor_Left(3500, 0);
+            break;
+
+        case RIGHT_TURN:
+            LED1_Output(RED_LED_ON);
+            LED2_Output(RGB_LED_SKY_BLUE);
+            Motor_Right(0, 3500);
             break;
 
         case T_INTERSECTION:
@@ -135,7 +111,7 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         default:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_OFF);
-            Motor_Stop;
+            Motor_Stop();
             break;
     }
 }
