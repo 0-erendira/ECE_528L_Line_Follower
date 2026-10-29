@@ -61,30 +61,32 @@ static Turn_State turn_state = NO_TURN;
 
 void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
-    if(turn_state == TURNING_LEFT)
-    {
-        Motor_Left(1800, 1800);
 
-        if(refelectance_sensor_data == CENTER)
+    if (turn_state == TURNING_LEFT)
         {
-            turn_state = NO_TURN;
-            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
-        }
-        return;
-    }
+            Motor_Left(1800, 1800);
 
-    if(turn_state == TURNING_RIGHT)
-    {
-        Motor_Right(1800, 1800);
-        turn_state = NO_TURN;
+            if (reflectance_sensor_data == CENTER)
+            {
+                turn_state = NO_TURN;
+                Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            }
 
-        if(refelectance_sensor_data == CENTER)
-        {
-            turn_state = NO_TURN;
-            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            return;
         }
-        return;
-    }
+
+    if (turn_state == TURNING_RIGHT)
+      {
+          Motor_Right(1800, 1800);
+
+          if (reflectance_sensor_data == CENTER)
+          {
+              turn_state = NO_TURN;
+              Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+          }
+
+          return;
+      }
 
     switch(reflectance_sensor_data)
     {
