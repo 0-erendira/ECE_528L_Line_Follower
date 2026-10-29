@@ -50,8 +50,42 @@ typedef enum
     DEAD_END            =   0b00000000
 } Line_Position;
 
+typedef enum
+{
+    NO_TURN,
+    TURNING_LEFT,
+    TURNING_RIGHT
+}Turn_State;
+
+static Turn_State turn_state = NO_TURN;
+
 void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
+    if(turn_state == TURNING_LEFT)
+    {
+        Motor_Left(1800, 1800);
+
+        if(refelectance_sensor_dat == CENTER)
+        {
+            turn_state = NO_TURN;
+            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+        }
+        return;
+    }
+
+    if(turn_state == TURNING_RIGHT)
+    {
+        Motor_Right(1800, 1800);
+        turn_state = NO_TURN;
+
+        if(refelectance_sensor_dat == CENTER)
+            {
+                turn_state = NO_TURN;
+                Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            }
+            return;
+    }
+
     switch(reflectance_sensor_data)
     {
         case CENTER:
@@ -75,25 +109,13 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case FAR_LEFT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_WHITE);
-            Motor_Left(3000, 1000);
+            Motor_Left(3500, 500);
             break;
 
         case FAR_RIGHT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(1000, 3000);
-            break;
-
-        case LEFT_TURN:
-            LED1_Output(RED_LED_ON);
-            LED2_Output(RGB_LED_WHITE);
-            Motor_Left(0, PWM_NOMINAL);
-            break;
-
-        case RIGHT_TURN:
-            LED1_Output(RED_LED_ON);
-            LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(PWM_NOMINAL, 0);
+            Motor_Right(500, 3500);
             break;
 
         case T_INTERSECTION:
