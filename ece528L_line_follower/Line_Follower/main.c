@@ -61,26 +61,34 @@ static Turn_State turn_state = NO_TURN;
 
 void Detect_Line_Position(uint8_t reflectance_sensor_data)
 {
+
+    uint8_t line_reacquired = (reflectance_sensor_data == CENTER ||
+            reflectance_sensor_data == SLIGHT_LEFT_CENTER || reflectance_sensor_data == SLIGHT_RIGHT_CENTER);
+
     if(turn_state == TURNING_LEFT)
     {
-        while(reflectance_sensor_data != CENTER)
-        {
-            Motor_Left(0, PWM_NOMINAL);
+        Motor_Left(500, PWM_NOMINAL);
 
+        if(!line_reacquired)
+        {
+            return;
         }
 
-        return;
+        turn_state = NO_TURN;
+
     }
 
     if(turn_state == TURNING_RIGHT)
     {
-        while(reflectance_sensor_data != CENTER)
-        {
-            Motor_Right(PWM_NOMINAL, 0);
-        }
+        Motor_Right(PWM_NOMINAL, 500);
 
-        return;
+        if(!line_reacquired)
+        {
+            return;
+        }
+        turn_state = NO_TURN;
     }
+
 
     switch(reflectance_sensor_data)
     {
@@ -93,39 +101,39 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case SLIGHT_LEFT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_YELLOW);
-            Motor_Forward(2000, PWM_NOMINAL);
+            Motor_Forward(PWM_NOMINAL, 500);
             break;
 
         case SLIGHT_RIGHT_CENTER:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_PINK);
-            Motor_Forward(PWM_NOMINAL, 2000);
+            Motor_Forward(500, PWM_NOMINAL);
             break;
 
         case FAR_LEFT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_WHITE);
-            Motor_Left(3000, 1000);
+            Motor_Left(1000, 3000);
             break;
 
         case FAR_RIGHT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(1000, 3000);
+            Motor_Right(3000, 1000);
             break;
 
         case LEFT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_WHITE);
             turn_state = TURNING_LEFT;
-            Motor_Left(0, PWM_NOMINAL);
+            Motor_Left(500, PWM_NOMINAL);
             break;
 
         case RIGHT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_SKY_BLUE);
             turn_state = TURNING_RIGHT;
-            Motor_Right(PWM_NOMINAL, 0);
+            Motor_Right(PWM_NOMINAL, 500);
             break;
 
         case T_INTERSECTION:
