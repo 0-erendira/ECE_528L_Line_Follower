@@ -67,28 +67,36 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
 
     if(turn_state == TURNING_LEFT)
     {
-        Motor_Left(500, PWM_NOMINAL);
-
         if(!line_reacquired)
         {
+            Motor_Left(PWM_NOMINAL, PWM_NOMINAL);
             return;
         }
+        else if(line_reacquired)
+        {
+            turn_state = NO_TURN;
+            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            return;
 
-        turn_state = NO_TURN;
+        }
 
     }
 
     if(turn_state == TURNING_RIGHT)
     {
-        Motor_Right(PWM_NOMINAL, 500);
-
         if(!line_reacquired)
         {
+            Motor_Right(PWM_NOMINAL, PWM_NOMINAL);
             return;
         }
-        turn_state = NO_TURN;
-    }
+        else if(line_reacquired)
+        {
+            turn_state = NO_TURN;
+            Motor_Forward(PWM_NOMINAL, PWM_NOMINAL);
+            return;
+        }
 
+    }
 
     switch(reflectance_sensor_data)
     {
@@ -113,27 +121,37 @@ void Detect_Line_Position(uint8_t reflectance_sensor_data)
         case FAR_LEFT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_WHITE);
-            Motor_Left(1000, 3000);
+            Motor_Forward(3000, 1000);
             break;
 
         case FAR_RIGHT:
             LED1_Output(RED_LED_OFF);
             LED2_Output(RGB_LED_SKY_BLUE);
-            Motor_Right(3000, 1000);
+            Motor_Forward(1000, 3000);
             break;
 
         case LEFT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_WHITE);
             turn_state = TURNING_LEFT;
-            Motor_Left(500, PWM_NOMINAL);
+            //Motor_Left(PWM_NOMINAL, PWM_NOMINAL);
+//            if(turn_state == TURNING_LEFT)
+//            {
+//                Moter_Left(PWM_NOMINAL, PWM_NOMINAL);
+//                if(!)
+//                {}
+//            }
             break;
 
         case RIGHT_TURN:
             LED1_Output(RED_LED_ON);
             LED2_Output(RGB_LED_SKY_BLUE);
             turn_state = TURNING_RIGHT;
-            Motor_Right(PWM_NOMINAL, 500);
+            //Motor_Right(PWM_NOMINAL, PWM_NOMINAL);
+//            if()
+//            {
+//
+//            }
             break;
 
         case T_INTERSECTION:
